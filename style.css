@@ -1,0 +1,68 @@
+body {
+    background-color: black;
+    color: whitesmoke;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 4vh 5vw;
+    text-align: center;
+}
+
+input[type=text],textarea,button{
+    background-color: rgb(37, 37, 37);
+    color: whitesmoke;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1em;
+    border: thin whitesmoke solid;
+}
+
+.templateOpt, button {
+    background-color: black;
+    border: thin whitesmoke solid;
+    text-align: center;
+}
+.templateOpt:hover{
+    background-color: grey;
+}
+
+.selected{
+    background-color: grey;
+}
+
+/** desktop **/
+@media (min-width:768px){
+    section {
+        display:flex block;
+        margin: 3vh auto;
+        text-align: center;
+        border-collapse: collapse;
+        justify-content: center;
+        width: 90vw;
+    }
+    .templateOpt,input[type=text] {
+        padding: 1vh 1vw;
+        margin: 0;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+    .templateOpts{
+        display:inline-flex;
+        padding: 1vh 1vw;
+        margin:0;
+    }
+    input[type=text] {
+        width: 8em;
+    }
+}
+
+@media (max-width:768px){
+    body {
+        font-size: large;
+    }
+
+    section {
+        display:flex;
+    }
+    #templateOpts{
+        align-content: right;
+        flex-flow:column wrap;
+    }
+}

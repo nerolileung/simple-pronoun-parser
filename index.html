@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Simple Pronoun Parser</title>
+</head>
+<body>
+    <h1>Simple Pronoun Parser</h1>
+    <sub>by gelatinousCat</sub>
+    <section>
+        <span>Templates:</span>
+        <div class="templateOpts">
+            <span class="templateOpt" id="template1" onclick="setTemplate(1)">she/her</span>
+            <span class="templateOpt" id="template0" onclick="setTemplate(0)">he/him</span>
+            <span class="templateOpt" id="template3" onclick="setTemplate(3)">ze/hir</span>
+            <span class="templateOpt" id="template2" onclick="setTemplate(2)">they/them (singular)</span>
+            <span class="templateOpt" id="template4" onclick="setTemplate(4)">they/them (plural)</span>
+        </div>
+    </section>
+    <section>
+        <span>Quick pronoun entry:</span>
+        <div class="templateOpts">
+            <span><input type="text" id="quick1" value="they"></span>
+            <span><input type="text" id="quick2" value="them"></span>
+            <span><input type="text" id="quick3" value="their"></span>
+            <span><input type="text" id="quick4" value="theirs"></span>
+            <span><input type="text" id="quick5" value="themself"></span>
+            <span class="templateOpt" id="quick6" onclick="setPlural()">are</span>
+        </div>
+        <div>
+            <button onclick="addPronouns()">Add</button>
+        </div>
+    </section>
+    <section>
+        Detailed entry:
+        <div>
+            examples
+        </div>
+        <button onclick="addPronouns()">Add</button>
+    </section>
+    <section>
+        <textarea></textarea>
+        <br>
+        <button>Parse!</button>
+    </section>
+    <section>
+        <div>Results:</div>
+        <textarea></textarea>
+    </section>
+    <script type="text/javascript" src="script.js"></script>
+</body>
+</html>
