@@ -112,12 +112,12 @@ function parse(){
         if (input[i] === "[" && input[i-1] != "\\"){
             // find  the ]
             for (j = i+1; j < input.length; j++){
-                if (input[i] === "]") break;
+                if (input[j] === "]") break;
             }
-            command = input.slice(i+1,j-1);
+            command = input.slice(i+1,j);
             
             // is it a pronoun?
-            switch (command){
+            switch (command.toLowerCase()){
                 case "they":
                 case "them":
                 case "their":
@@ -126,10 +126,7 @@ function parse(){
                     output += insertPronoun(command);
                     break;
                 default:
-                    // is there more than one parameter?
-                    for (k = 0; k < command.length; k++){
-
-                    }
+                    output += insertWord(command);
                     break;
             }
 
@@ -148,27 +145,72 @@ function pluralise(text){
 }
 
 function singularise(text){
-    text = text.slice(0,text.length-2);
+    text = text.slice(0,text.length-1);
     return text;
 }
 
 function insertPronoun(text){
-    switch (text){
+    switch (text.toLowerCase()){
         case "they":
-            text = defaultSet.they;
+            output = defaultSet.they;
             break;
         case "them":
-            text = defaultSet.them;
+            output = defaultSet.them;
             break;
         case "their":
-            text = defaultSet.their;
+            output = defaultSet.their;
             break;
         case "theirs":
-            text = defaultSet.theirs;
+            output = defaultSet.theirs;
             break;
         case "themself":
-            text = defaultSet.themself;
+            output = defaultSet.themself;
             break;
     }
+    // limited case sensitivity; lower, upper, title
+    titleText = text[0].toUpperCase() + text.slice(1).toLowerCase();
+    if (text === text.toUpperCase()) output = output.toUpperCase();
+    else if (text === titleText) output = output[0].toUpperCase() + output.slice(1);
+
+    return output;
+}
+
+function insertWord(text){
+    // is there more than one parameter?
+    bar1 = -1;
+    bar2 = -1;
+    for (i = 0; i < text.length; i++){
+        if (text[i] === "|"){
+            if (bar1 > -1) bar2 = i;
+            else bar1 = i;
+        }
+    }
+
+    // only one parameter
+    if (bar1 === -1) {
+        //cba to detect whether it's already plural/singular
+        if (defaultSet.plural) text = pluralise(text);
+        else text = singularise(text);
+    }
+    else if (bar2 === -1){
+        // [singular|plural]
+        if (defaultSet.plural) text = command.slice(bar1+1);
+        else text = text.slice(0,bar1);
+    }
+    else {
+        // [he|she|they]
+        switch (defaultSet){
+            case sets[0]:
+                text = text.slice(0,bar1);
+                break;
+            case sets[1]:
+                text = text.slice(bar1+1,bar2);
+                break;
+            default:
+                text = text.slice(bar2+1);
+                break;
+        }
+    }
+
     return text;
 }
