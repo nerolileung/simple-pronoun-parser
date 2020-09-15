@@ -8,7 +8,6 @@ function Set(subject,object,possAd,possP,reflexive,plural){
 }
 
 sets = [];
-setDisplay = document.getElementById("sectionSets").style.display;
 
 // defaults: he, she, they (singular), ze, they (plural)
 sets.push(new Set("he","him","his","his","himself",false));
@@ -18,6 +17,24 @@ sets.push(new Set("ze","hir","hir","hirs","hirself",false));
 sets.push(new Set("they","them","their","theirs","themselves",true));
 
 defaultSet = sets[2];
+
+setDisplay = document.getElementById("sectionSets").style.display;
+
+// dictionary of singular:plural suffixes; if it's not in here stick an s on the end
+suffixes = {
+    "s": "ses",
+    "ss": "sses",
+    "sh": "shes",
+    "ch": "ches",
+    "x": "xes",
+    "z": "zes",
+    "f": "ves",
+    "fe": "ves",
+    "y": "ies",
+    "o": "oes",
+    "sis": "ses", // overlaps s
+    "man": "men"
+}
 
 //adding pronoun sets + related functions
 function setTemplate(index){
@@ -132,6 +149,10 @@ function parse(){
 
             i = j;
         }
+        else if (input[i] === "\\" && input[i+1] === "["){
+            // ignore escape backslash
+            continue;
+        }
         else {
             output += input[i];
         }
@@ -140,12 +161,21 @@ function parse(){
 }
 
 function pluralise(text){
+    // see if known suffix can be found in end chunk
+    for (i = text.length-1; i > 0; i--){
+        chunk = text.slice(i);
+        if (Object.keys(suffixes).includes(chunk)){
+            text = text.slice(0,i) + suffixes[chunk];
+            return text;
+        }
+    }
     text += "s";
     return text;
 }
 
 function singularise(text){
-    text = text.slice(0,text.length-1);
+    // text must match a known plural suffix
+    text = Object.keys(suffixes).find(key => suffixes[key] === text)
     return text;
 }
 
@@ -188,9 +218,27 @@ function insertWord(text){
 
     // only one parameter
     if (bar1 === -1) {
-        //cba to detect whether it's already plural/singular
-        if (defaultSet.plural) text = pluralise(text);
-        else text = singularise(text);
+        // rough plural detection: compare last few chars to known suffixes
+        isSingle = true;
+        charNumMax = 4;
+        charNumMin = 3;
+        for (i = charNumMax; i >= charNumMin; i--){
+            if (i > text.length) i = text.length;
+            end = text.slice(text.length-i);
+            if (Object.values(suffixes).includes(end)){
+                isSingle = false;
+                break;
+            }
+        }
+        // subject-verb agreement
+        if (isSingle && defaultSet.plural) {
+            if (text.length === end.length) text = pluralise(end);
+            else text = text.slice(0,text.length-end.length) + pluralise(end);
+        }
+        else if (!isSingle && !defaultSet.plural) {
+            if (i > text.length) i = text.length;
+            text = text.slice(0,text.length-i) + singularise(end);
+        }
     }
     else if (bar2 === -1){
         // [singular|plural]
@@ -198,19 +246,23 @@ function insertWord(text){
         else text = text.slice(0,bar1);
     }
     else {
-        // [he|she|they]
-        switch (defaultSet){
-            case sets[0]:
-                text = text.slice(0,bar1);
-                break;
-            case sets[1]:
-                text = text.slice(bar1+1,bar2);
-                break;
-            default:
-                text = text.slice(bar2+1);
-                break;
-        }
+        text = heSheThey(text, bar1, bar2)
     }
 
+    return text;
+}
+
+function heSheThey(text, bar1, bar2){
+    switch (defaultSet){
+        case sets[0]:
+            text = text.slice(0,bar1);
+            break;
+        case sets[1]:
+            text = text.slice(bar1+1,bar2);
+            break;
+        default:
+            text = text.slice(bar2+1);
+            break;
+    }
     return text;
 }

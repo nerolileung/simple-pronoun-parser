@@ -14,8 +14,8 @@
                 <span class="templateOpt" id="template1" onclick="setTemplate(1)">she/her</span>
                 <span class="templateOpt" id="template0" onclick="setTemplate(0)">he/him</span>
                 <span class="templateOpt" id="template3" onclick="setTemplate(3)">ze/hir</span>
-                <span class="templateOpt selected" id="template2" onclick="setTemplate(2)">they/them (singular)</span>
-                <span class="templateOpt" id="template4" onclick="setTemplate(4)">they/them (plural)</span>
+                <span class="templateOpt selected" id="template2" onclick="setTemplate(2)">they/themself</span>
+                <span class="templateOpt" id="template4" onclick="setTemplate(4)">they/themselves</span>
             </div>
     </div>
     <div id="sectionSets">
@@ -31,8 +31,9 @@
                 <li>the parser replaces [they], [them], [their], [theirs], and [themself] within text as appropriate, using whichever set you've picked above</li>
                 <li>other [word|words] in brackets are used based on whether the pronouns are singular or plural, respectively</li>
                 <li>if you provide three parameters, they'll be parsed as [masculine|feminine|neutral] forms</li>
-                <li>you can just put a [word] in brackets and the parser will do its best to use the right form, but English grammar has lots of exceptions</li>
-                <li>if you want the parser to ignore square brackets, put a backslash before \[them] </li>
+                <li>you can just put a [word] in brackets and the parser will do its best to use the right form, but it's not very good</li>
+                <li>if you want the parser to ignore square brackets, put a backslash \[before] them</li>
+                <li>[[Names]] can be associated with a pronoun set, and the parser will use the appropriate set following an instance of the name</li>
                 <li>you can add more pronouns using the defaults as templates</li>
                 <li>added sets are lost when you refresh or leave the page, for now</li>
             </ul>
@@ -70,7 +71,7 @@
     <section>
         <h3 onclick="pageCollapse('sectionParse')">Text Parser<br><span id="sectionParseArrow">&uarr;</span></h3>
         <div id="sectionParse">
-            <textarea id="parseIn"></textarea>
+            <textarea id="parseIn">[They] [rides|ride] [their] bike [recklessly|daintily|casually].</textarea>
             <br><br>
             <button onclick="parse()">Parse!</button>
             <br><br>
