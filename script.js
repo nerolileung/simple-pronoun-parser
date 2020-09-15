@@ -18,8 +18,6 @@ sets.push(new Set("they","them","their","theirs","themselves",true));
 
 defaultSet = sets[2];
 
-setDisplay = document.getElementById("sectionSets").style.display;
-
 // dictionary of singular:plural suffixes; if it's not in here stick an s on the end
 suffixes = {
     "s": "ses",
@@ -36,6 +34,9 @@ suffixes = {
     "man": "men"
 }
 
+names = {};
+names["John"] = sets[0];
+
 //adding pronoun sets + related functions
 function setTemplate(index){
     oldIndex = sets.indexOf(defaultSet);
@@ -51,6 +52,8 @@ function setTemplate(index){
     document.getElementById("entry5").value = defaultSet.themself;
     if (defaultSet.plural) document.getElementById("entry6").innerText = "are";
     else document.getElementById("entry6").innerText = "is";
+
+    document.getElementById("entrySet").value = defaultSet.they;
 
     setExamples();
 }
@@ -98,8 +101,7 @@ function addPronouns(){
     if (!exists){
         sets.push(tempSet);
 
-        if (setDisplay===""){
-            setDisplay="block";
+        if (document.getElementById("sectionSets").style.display===""){
             document.getElementById("sectionSets").style.display = "block";
         }
 
@@ -127,27 +129,46 @@ function parse(){
     output = "";
     for (i = 0; i < input.length; i++){
         if (input[i] === "[" && input[i-1] != "\\"){
-            // find  the ]
-            for (j = i+1; j < input.length; j++){
-                if (input[j] === "]") break;
+            // check for second [
+            if (input[i+1] === "[") {
+                // find the ]]
+                for (j = i+1; j < input.length; j++){
+                    if (input[j] === "]" && input[j+1] === "]") break;
+                }
+                command = input.slice(i+2,j);
+                
+                // if name is recognised, change default set to associated one
+                if (names[command]!=undefined) {
+                    for (k = 0; k < sets.length; k++){
+                        if (sets[k] === names[command]) setTemplate(k);
+                    }
+                }
+                
+                output += command;
+                i = j+1;
             }
-            command = input.slice(i+1,j);
-            
-            // is it a pronoun?
-            switch (command.toLowerCase()){
-                case "they":
-                case "them":
-                case "their":
-                case "theirs":
-                case "themself":
-                    output += insertPronoun(command);
-                    break;
-                default:
-                    output += insertWord(command);
-                    break;
+            else {
+                // find the ]
+                for (j = i+1; j < input.length; j++){
+                    if (input[j] === "]") break;
+                }
+                command = input.slice(i+1,j);
+                
+                // is it a pronoun?
+                switch (command.toLowerCase()){
+                    case "they":
+                    case "them":
+                    case "their":
+                    case "theirs":
+                    case "themself":
+                        output += insertPronoun(command);
+                        break;
+                    default:
+                        output += insertWord(command);
+                        break;
+                }
+                i = j;
             }
-
-            i = j;
         }
         else if (input[i] === "\\" && input[i+1] === "["){
             // ignore escape backslash
@@ -180,28 +201,16 @@ function singularise(text){
 }
 
 function insertPronoun(text){
-    switch (text.toLowerCase()){
-        case "they":
-            output = defaultSet.they;
-            break;
-        case "them":
-            output = defaultSet.them;
-            break;
-        case "their":
-            output = defaultSet.their;
-            break;
-        case "theirs":
-            output = defaultSet.theirs;
-            break;
-        case "themself":
-            output = defaultSet.themself;
-            break;
-    }
+    output = defaultSet[text.toLowerCase()];
+
     // limited case sensitivity; lower, upper, title
     titleText = text[0].toUpperCase() + text.slice(1).toLowerCase();
-    if (text === text.toUpperCase()) output = output.toUpperCase();
-    else if (text === titleText) output = output[0].toUpperCase() + output.slice(1);
-
+    if (text === text.toUpperCase()) {
+        output = output.toUpperCase();
+    }
+    else if (text === titleText) {
+        output = output[0].toUpperCase() + output.slice(1);
+    }
     return output;
 }
 
@@ -265,4 +274,32 @@ function heSheThey(text, bar1, bar2){
             break;
     }
     return text;
+}
+
+// adding names
+function addName(){
+    name = document.getElementById("entryName").value;
+    if (names[name] == undefined){ // doesn't already exist
+        names[name] = defaultSet;
+    }
+    setNames();
+}
+
+function removeName(){
+    name = document.getElementById("entryName").value;
+    if (names[name] != undefined) {
+        delete names[name];
+    }
+    setNames();
+}
+
+function setNames(){
+    text = "";
+    for (var key in names){
+        if (text != "") text += ", ";
+        text += key + " (" + names[key].they + "/" + names[key].them + ")";
+    }
+    // no names
+    if (text === "") text = "(none)";
+    document.getElementById("addedNames").innerHTML = text;
 }

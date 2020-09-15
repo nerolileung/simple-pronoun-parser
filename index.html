@@ -22,8 +22,9 @@
         <span>Added sets:</span>
         <div class="templateOpts" id="addedSets"></div>
     </div>
+    <!-- About -->
     <section>
-        <h3 onclick="pageCollapse('about')"><span id="sectionParseArrow">&darr;</span></h3>
+        <h3 onclick="pageCollapse('about')">About<br><span id="aboutArrow">&uarr;</span></h3>
         <div id="about">
             <ul>
                 <li>click on the arrows to expand/collapse sections</li>
@@ -33,12 +34,13 @@
                 <li>if you provide three parameters, they'll be parsed as [masculine|feminine|neutral] forms</li>
                 <li>you can just put a [word] in brackets and the parser will do its best to use the right form, but it's not very good</li>
                 <li>if you want the parser to ignore square brackets, put a backslash \[before] them</li>
-                <li>[[Names]] can be associated with a pronoun set, and the parser will use the appropriate set following an instance of the name</li>
-                <li>you can add more pronouns using the defaults as templates</li>
-                <li>added sets are lost when you refresh or leave the page, for now</li>
+                <li>[[Names]] can be associated with a pronoun set, and the parser will use the appropriate set following an instance of the name (case sensitive)</li>
+                <li>use the default sets to determine what pronouns are associated with a name, or as templates for new pronoun sets</li>
+                <li>added sets and names are lost when you refresh or leave the page, for now</li>
             </ul>
         </div>
     </section>
+    <!-- Pronouns-->
     <section>
         <h3 onclick="pageCollapse('sectionAdd')">Adding Pronoun Sets<br><span id="sectionAddArrow">&darr;</span></h3>
         <div id="sectionAdd">
@@ -68,10 +70,35 @@
             </div>
         </div>
     </section>
+    <!-- Names -->
+    <section>
+        <h3 onclick="pageCollapse('sectionNames')">Names<br><span id="sectionNamesArrow">&darr;</span></h3>
+        <div id="sectionNames">
+            <span>Existing names:</span>
+            <div id="addedNames">
+                John (he/him)
+            </div>
+            <br>
+            <span>Pronouns:</span>
+            <div class="templateOpts">
+                <span><input type="text" id="entrySet" value="they" disabled></span>
+            </div>
+            <br><br>
+            <span>Name:</span>
+            <div class="templateOpts">
+                <span><input type="text" id="entryName" value="Jay"></span>
+            </div>
+            <br><br>
+            <div>
+                <button onclick="addName()">Add</button><button onclick="removeName()">Remove</button>
+            </div>
+        </div>
+    </section>
+    <!-- Parser -->
     <section>
         <h3 onclick="pageCollapse('sectionParse')">Text Parser<br><span id="sectionParseArrow">&uarr;</span></h3>
         <div id="sectionParse">
-            <textarea id="parseIn">[They] [rides|ride] [their] bike [recklessly|daintily|casually].</textarea>
+            <textarea id="parseIn">[They] [rides|ride] [their] bike [recklessly|smoothly|casually]. [[John]] watches in awe, wishing [they] could do the same.</textarea>
             <br><br>
             <button onclick="parse()">Parse!</button>
             <br><br>

@@ -18,6 +18,9 @@ input[type=text],textarea,button{
     font-size: 1em;
     border: thin whitesmoke solid;
 }
+input[type=text]:disabled{
+    text-align: center;
+}
 
 li {
     line-height: 1.8em;
@@ -38,7 +41,7 @@ li {
 #about {
     text-align: left;
 }
-#sectionSets{
+#sectionSets,#sectionNames{
     display: none;
 }
 
