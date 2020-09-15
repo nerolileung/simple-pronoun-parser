@@ -7,46 +7,75 @@
 </head>
 <body>
     <h1>Simple Pronoun Parser</h1>
-    <sub>by gelatinousCat</sub>
+    <sub>by gelatinousCat</sub><br><br>
+    <div>
+        <span>Default sets:</span>
+            <div class="templateOpts">
+                <span class="templateOpt" id="template1" onclick="setTemplate(1)">she/her</span>
+                <span class="templateOpt" id="template0" onclick="setTemplate(0)">he/him</span>
+                <span class="templateOpt" id="template3" onclick="setTemplate(3)">ze/hir</span>
+                <span class="templateOpt selected" id="template2" onclick="setTemplate(2)">they/them (singular)</span>
+                <span class="templateOpt" id="template4" onclick="setTemplate(4)">they/them (plural)</span>
+            </div>
+    </div>
+    <div id="sectionSets">
+        <span>Added sets:</span>
+        <div class="templateOpts" id="addedSets"></div>
+    </div>
     <section>
-        <span>Templates:</span>
-        <div class="templateOpts">
-            <span class="templateOpt" id="template1" onclick="setTemplate(1)">she/her</span>
-            <span class="templateOpt" id="template0" onclick="setTemplate(0)">he/him</span>
-            <span class="templateOpt" id="template3" onclick="setTemplate(3)">ze/hir</span>
-            <span class="templateOpt" id="template2" onclick="setTemplate(2)">they/them (singular)</span>
-            <span class="templateOpt" id="template4" onclick="setTemplate(4)">they/them (plural)</span>
+        <h3 onclick="pageCollapse('about')"><span id="sectionParseArrow">&darr;</span></h3>
+        <div id="about">
+            <ul>
+                <li>click on the arrows to expand/collapse sections</li>
+                <li>the parser replaces [they], [them], [their], [theirs], and [themself] within text as appropriate, using whichever set you've picked above</li>
+                <li>other [word|words] in brackets are used based on whether the pronouns are singular or plural, respectively</li>
+                <li>if you provide three parameters, they'll be parsed as [masculine|feminine|neutral] forms</li>
+                <li>you can just put a [word] in brackets and the parser will do its best to use the right form, but English grammar has lots of exceptions</li>
+                <li>if you want the parser to ignore square brackets, put a backslash before \[them] </li>
+                <li>you can add more pronouns using the defaults as templates</li>
+                <li>added sets are lost when you refresh or leave the page, for now</li>
+            </ul>
         </div>
     </section>
     <section>
-        <span>Quick pronoun entry:</span>
-        <div class="templateOpts">
-            <span><input type="text" id="quick1" value="they"></span>
-            <span><input type="text" id="quick2" value="them"></span>
-            <span><input type="text" id="quick3" value="their"></span>
-            <span><input type="text" id="quick4" value="theirs"></span>
-            <span><input type="text" id="quick5" value="themself"></span>
-            <span class="templateOpt" id="quick6" onclick="setPlural()">are</span>
-        </div>
-        <div>
-            <button onclick="addPronouns()">Add</button>
+        <h3 onclick="pageCollapse('sectionAdd')">Adding Pronoun Sets<br><span id="sectionAddArrow">&darr;</span></h3>
+        <div id="sectionAdd">
+            <span>Pronouns:</span>
+            <div class="templateOpts">
+                <span><input type="text" id="entry1" value="they"></span>
+                <span><input type="text" id="entry2" value="them"></span>
+                <span><input type="text" id="entry3" value="their"></span>
+                <span><input type="text" id="entry4" value="theirs"></span>
+                <span><input type="text" id="entry5" value="themself"></span>
+                <span class="templateOpt" id="entry6" onclick="setPlural()">are</span>
+            </div>
+            
+            <br><br>
+            <div>Examples <button onclick="setExamples()">Refresh</button></div><br>
+            <div>
+                <span id="example1" class="example">They</span> 
+                <span id="example6" class="example">are</span> quite proud of 
+                <span id="example5" class="example">themself</span>.<br>
+                That belongs to <span id="example2" class="example">them</span>.<br>
+                It's <span id="example3" class="example">their</span> idea.<br>
+                The idea was <span id="example4" class="example">theirs</span>.
+            </div>
+            <br>
+            <div>
+                <button onclick="addPronouns()">Save</button>
+            </div>
         </div>
     </section>
     <section>
-        Detailed entry:
-        <div>
-            examples
+        <h3 onclick="pageCollapse('sectionParse')">Text Parser<br><span id="sectionParseArrow">&uarr;</span></h3>
+        <div id="sectionParse">
+            <textarea id="parseIn"></textarea>
+            <br><br>
+            <button onclick="parse()">Parse!</button>
+            <br><br>
+            <div>Results:</div>
+            <textarea id="parseOut"></textarea>
         </div>
-        <button onclick="addPronouns()">Add</button>
-    </section>
-    <section>
-        <textarea></textarea>
-        <br>
-        <button>Parse!</button>
-    </section>
-    <section>
-        <div>Results:</div>
-        <textarea></textarea>
     </section>
     <script type="text/javascript" src="script.js"></script>
 </body>

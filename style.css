@@ -6,6 +6,11 @@ body {
     text-align: center;
 }
 
+section {
+    border-bottom: thin solid whitesmoke;
+    padding-bottom: 1vw;
+}
+
 input[type=text],textarea,button{
     background-color: rgb(37, 37, 37);
     color: whitesmoke;
@@ -14,17 +19,32 @@ input[type=text],textarea,button{
     border: thin whitesmoke solid;
 }
 
+li {
+    line-height: 1.8em;
+}
+
+#sectionAdd{
+    display:none;
+}
 .templateOpt, button {
     background-color: black;
     border: thin whitesmoke solid;
     text-align: center;
 }
-.templateOpt:hover{
+.templateOpt:hover,.selected,button:active{
     background-color: grey;
 }
 
-.selected{
-    background-color: grey;
+#about {
+    text-align: left;
+}
+#sectionSets{
+    display: none;
+}
+
+.example {
+    text-decoration: underline;
+    line-height: 1.8em;
 }
 
 /** desktop **/
@@ -50,6 +70,10 @@ input[type=text],textarea,button{
     }
     input[type=text] {
         width: 8em;
+    }
+    textarea {
+        width:80vw;
+        margin: 1vh 1vw;
     }
 }
 
