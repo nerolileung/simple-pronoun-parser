@@ -2,13 +2,13 @@ body {
     background-color: black;
     color: whitesmoke;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin: 4vh 5vw;
     text-align: center;
 }
 
 section {
     border-bottom: thin solid whitesmoke;
-    padding-bottom: 1vw;
+    padding-bottom: 1vh;
+    display: flexbox;
 }
 
 input[type=text],textarea,button{
@@ -23,7 +23,7 @@ input[type=text]:disabled{
 }
 
 li {
-    line-height: 1.8em;
+    margin-bottom: 1em;
 }
 
 #sectionAdd{
@@ -51,9 +51,11 @@ li {
 }
 
 /** desktop **/
-@media (min-width:768px){
+@media only screen and (min-width:768px){
+    body {
+        margin: 4vh 5vw;
+    }
     section {
-        display:flex block;
         margin: 3vh auto;
         text-align: center;
         border-collapse: collapse;
@@ -80,16 +82,27 @@ li {
     }
 }
 
-@media (max-width:768px){
+/** mobile **/
+@media only screen and (max-device-width:768px){
     body {
-        font-size: large;
+        background-color: salmon;
     }
-
-    section {
-        display:flex;
+    .templateOpts{
+        flex-direction: column;
+        flex-wrap: wrap;
+        width:80vw;
+        margin: 0 auto;
     }
-    #templateOpts{
-        align-content: right;
-        flex-flow:column wrap;
+    .templateOpt, input[type=text]{
+        width:100%;
+        text-align: center;
+        margin: 0 auto;
+        padding: 0;
+    }
+    input[type=text],textarea,button{
+        font-size:1em;
+    }
+    textarea{
+        width:80vw;
     }
 }
