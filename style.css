@@ -34,7 +34,7 @@ li {
     text-align: center;
 }
 .templateOpt:hover,.selected,button:active{
-    background-color: grey;
+    background-color: #4f4f4f;
 }
 
 #about {
@@ -45,7 +45,7 @@ li {
 }
 
 .example {
-    text-decoration: underline;
+    font-weight: bolder;
     line-height: 1.8em;
 }
 
@@ -139,7 +139,7 @@ input[type=text],button,textarea{
         background-color: rgb(45,45,45);
     }
     .templateOpts, textarea{
-        width: 90vw;
+        width: 80vw;
     }
     h3 {
         background-color: rgb(60,60,60);

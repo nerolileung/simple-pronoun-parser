@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>Simple Pronoun Parser</title>
@@ -46,11 +46,21 @@
         <div id="sectionAdd">
             <span>Pronouns:</span>
             <div class="templateOpts">
-                <div><input type="text" id="entry1" value="they"></div>
-                <div><input type="text" id="entry2" value="them"></div>
-                <div><input type="text" id="entry3" value="their"></div>
-                <div><input type="text" id="entry4" value="theirs"></div>
-                <div><input type="text" id="entry5" value="themself"></div>
+                <div><label title="Enter subject pronoun (i.e. they)">
+                    <input type="text" id="entry1" value="they">
+                </label></div>
+                <div><label title="Enter object pronoun (i.e. them)">
+                    <input type="text" id="entry2" value="them">
+                </label></div>
+                <div><label title="Enter possessive adjective (i.e. their)">
+                    <input type="text" id="entry3" value="their">
+                </label></div>
+                <div><label title="Enter possessive pronoun (i.e. theirs)">
+                    <input type="text" id="entry4" value="theirs">
+                </label></div>
+                <div><label title="Enter reflexive pronoun (i.e. themself)">
+                    <input type="text" id="entry5" value="themself">
+                </label></div>
                 <div><div class="templateOpt" id="entry6" onclick="setPlural()">are</div></div>
             </div>
             
@@ -81,12 +91,16 @@
             <br>
             <span>Pronouns:</span>
             <div class="templateOpts">
-                <span><input type="text" id="entrySet" value="they" disabled></span>
-            </div>
+                <span><label title="Pronouns to be used, based on selected set">
+                    <input type="text" id="entrySet" value="they" disabled>
+                </span></label>
+            </div>  
             <br><br>
             <span>Name:</span>
             <div class="templateOpts">
-                <span><input type="text" id="entryName" value="Jay"></span>
+                <span><label title="Enter name">
+                    <input type="text" id="entryName" value="Jay">
+                </label></span>
             </div>
             <br><br>
             <div>
@@ -98,12 +112,16 @@
     <section>
         <h3 onclick="pageCollapse('sectionParse')">Text Parser<br><span id="sectionParseArrow">&uarr;</span></h3>
         <div id="sectionParse">
-            <textarea id="parseIn">[They] [rides|ride] [their] bike [recklessly|smoothly|casually]. [[John]] watches in awe, wishing [they] could do the same.</textarea>
+            <label title="Enter text to be parsed">
+                <textarea id="parseIn">[They] [rides|ride] [their] bike [recklessly|smoothly|casually]. [[John]] watches in awe, wishing [they] could do the same.</textarea>
+            </label>
             <br><br>
             <button onclick="parse()">Parse!</button>
             <br><br>
             <div>Results:</div>
-            <textarea id="parseOut"></textarea>
+            <label title="Parsed text">
+                <textarea id="parseOut"></textarea>
+            </label>
         </div>
     </section>
     <script type="text/javascript" src="script.js"></script>
