@@ -121,6 +121,9 @@ input[type=text],button,textarea{
     body, sub {
         font-size: 32px;
     }
+    html.framed body, html.framed sub{
+        font-size: 10px;
+    }
     section {
         border: none;
         padding: 0;
@@ -128,6 +131,10 @@ input[type=text],button,textarea{
     .templateOpts, input[type=text],textarea,button{
         font-size: 36px;
         line-height: 40px;
+    }
+    html.framed .templateOpts, html.framed input[type=text],html.framed textarea,button{
+        font-size: 10px;
+        line-height: 16px;
     }
     input[type=text]{
         height: 40px;
@@ -145,5 +152,8 @@ input[type=text],button,textarea{
         background-color: rgb(60,60,60);
         padding: 2vh 0;
         font-size: 45px;
+    }
+    html.framed h3 {
+        font-size: 12px;
     }
 }
